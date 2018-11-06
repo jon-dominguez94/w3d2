@@ -24,4 +24,19 @@ class Question
     Question.new(question.first)
   end
   
+  def self.find_by_author_id(author_id)
+    questions = QuestionsDatabase.instance.execute(<<-SQL, author_id)
+      SELECT * FROM questions WHERE user_id = ?
+    SQL
+    
+    return nil if questions.length == 0
+    # q_list = []
+    # questions.each do |q|
+    #   q_list << Question.new(q)
+    # end
+    # q_list
+    # 
+    questions.map {|q| Question.new(q)}
+  end
+  
 end

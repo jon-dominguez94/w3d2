@@ -35,7 +35,7 @@ CREATE TABLE replies (
   question_id INTEGER NOT NULL,
   parent_reply_id INTEGER,
   user_id INTEGER NOT NULL,
-  body TEXT,23
+  body TEXT,
   
   FOREIGN KEY (question_id) REFERENCES questions(id),
   FOREIGN KEY (parent_reply_id) REFERENCES replies(id),
@@ -60,7 +60,8 @@ INSERT INTO
   questions (title, body, user_id)
 VALUES
   ("SQL Method", "sgsefesrtgesrgr", (SELECT id FROM users WHERE fname = "Daniel" AND lname = "Moon")),
-  ("Name", "What's your name?", (SELECT id FROM users WHERE fname = "Jon" AND lname = "Dominguez"));
+  ("Name", "What's your name?", (SELECT id FROM users WHERE fname = "Jon" AND lname = "Dominguez")),
+  ("Hometown", "Where are you from?", (SELECT id FROM users WHERE fname = "Jon" AND lname = "Dominguez"));
   
 INSERT INTO
   question_follows (user_id, question_id)

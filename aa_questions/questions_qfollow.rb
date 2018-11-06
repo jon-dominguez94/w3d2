@@ -1,4 +1,6 @@
-class QuestionFollows
+class QuestionFollow
+  
+  attr_accessor :id, :user_id, :question_id
   
   def initialize(option)
     @id = option['id']
@@ -13,8 +15,6 @@ class QuestionFollows
     SQL
     
     return nil if follow.length == 0
-    QuestionFollows.new(follow.first)
+    QuestionFollow.new(follow.first)
   end
-  
-  
 end
