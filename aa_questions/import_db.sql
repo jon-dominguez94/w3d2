@@ -47,13 +47,25 @@ CREATE TABLE question_likes (
 
 INSERT INTO
   users(fname, lname)
-  VALUES
+VALUES
   ("Jon", "Dominguez"), ("Daniel", "Moon"), ("Jessie", "Wong");
 
 INSERT INTO 
   questions (title, body, user_id)
-  VALUES
+VALUES
   ("SQL Method", "sgsefesrtgesrgr", (SELECT id FROM users WHERE fname = "Daniel" AND lname = "Moon")),
   ("Name", "What's your name?", (SELECT id FROM users WHERE fname = "Jon" AND lname = "Dominguez"));
   
+INSERT INTO
+  question_follows (user_id, question_id)
+VALUES
+  ((SELECT id FROM users WHERE fname = "Jessie" AND lname = "Wong"),
+   (SELECT question_id FROM questions WHERE title = "SQL Method")), 
+  ((SELECT id FROM users WHERE fname = "Daniel" AND lname = "Moon"),
+   (SELECT question_id FROM questions WHERE title = "Name"));
+   
+
+
   
+  
+    
