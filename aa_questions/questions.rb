@@ -15,11 +15,25 @@ end
 
 class User
   
+  attr_accessor :id, :fname, :lname
+  
   def initialize(options)
-    @fname = options[:fname]
-    @lname = options[:lname]
+    @id = options['id']
+    @fname = options['fname']
+    @lname = options['lname']
   end
-    
+  
+  def self.find_by_id(id)
+    # lookup an 'id' in the table & return an object that represent 'row'
+    # User::find_by_id should return an instance of User class (NOT data hash return by QuestionsDatabase)
+    user =  QuestionsDatabase.instance.execute(<<-SQL, id) 
+      SELECT * FROM users WHERE id = ?
+    SQL
+    return nil unless user.length > 0
+    User.new(user.first)
+  end
+  
+  
   
 end
 
