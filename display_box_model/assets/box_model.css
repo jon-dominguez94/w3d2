@@ -72,11 +72,11 @@ h2 + .user_review {
     border-top: 1px solid black;
 }
 
-nav li {
+nav ul li {
   display: inline-block;
 }
 
-nav li a {
+nav ul li a {
   padding: 20px;
 }
 
