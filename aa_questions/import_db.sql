@@ -22,7 +22,17 @@ CREATE TABLE question_follows (
   FOREIGN KEY (question_id) REFERENCES questions(id)
 );
 
-
+CREATE TABLE replies (
+  id INTEGER PRIMARY KEY,
+  question_id INTEGER NOT NULL,
+  reply_id INTEGER,
+  user_id INTEGER NOT NULL,
+  body TEXT,
+  
+  FOREIGN KEY (question_id) REFERENCES questions(id),
+  FOREIGN KEY (reply_id) REFERENCES replies(id),
+  FOREIGN KEY (user_id) REFERENCES users(id)
+);
 
 
 # two foreigns keys for the link (references users & questions)
