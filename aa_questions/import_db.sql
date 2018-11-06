@@ -60,12 +60,42 @@ INSERT INTO
   question_follows (user_id, question_id)
 VALUES
   ((SELECT id FROM users WHERE fname = "Jessie" AND lname = "Wong"),
-   (SELECT question_id FROM questions WHERE title = "SQL Method")), 
+   (SELECT id FROM questions WHERE title = "SQL Method")), 
   ((SELECT id FROM users WHERE fname = "Daniel" AND lname = "Moon"),
-   (SELECT question_id FROM questions WHERE title = "Name"));
+   (SELECT id FROM questions WHERE title = "Name"));
    
 
-
+INSERT INTO
+  replies (question_id, reply_id, user_id, body)
+VALUES
+  ((SELECT id FROM questions WHERE title = "Name"),
+    null,
+    (SELECT id FROM users WHERE fname = "Daniel" AND lname = "Moon"),
+    "My name is Daniel"),
+    
+    (
+    (SELECT id FROM questions WHERE title = "Name"),
+    (SELECT id FROM replies WHERE body = "My name is Daniel" AND user_id = (SELECT id FROM users WHERE fname = "Daniel" AND lname = "Moon"),
+    (SELECT id FROM users WHERE fname = "Jon" AND lname = "Dominguez"),
+    "Thanks for the reply!"
+  );
+    
+    
+   
+   
+   
+   
+   CREATE TABLE replies (
+     id INTEGER PRIMARY KEY,
+     question_id INTEGER NOT NULL,
+     reply_id INTEGER,
+     user_id INTEGER NOT NULL,
+     body TEXT,
+     
+     FOREIGN KEY (question_id) REFERENCES questions(id),
+     FOREIGN KEY (reply_id) REFERENCES replies(id),
+     FOREIGN KEY (user_id) REFERENCES users(id)
+   );
   
   
     
