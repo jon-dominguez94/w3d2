@@ -1,3 +1,5 @@
+DROP TABLE IF EXISTS users;
+
 PRAGMA foreign_keys = ON;
 
 CREATE TABLE users (
@@ -27,12 +29,12 @@ CREATE TABLE question_follows (
 CREATE TABLE replies (
   id INTEGER PRIMARY KEY,
   question_id INTEGER NOT NULL,
-  reply_id INTEGER,
+  parent_reply_id INTEGER,
   user_id INTEGER NOT NULL,
   body TEXT,
   
   FOREIGN KEY (question_id) REFERENCES questions(id),
-  FOREIGN KEY (reply_id) REFERENCES replies(id),
+  FOREIGN KEY (parent_reply_id) REFERENCES replies(id),
   FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
@@ -66,10 +68,10 @@ VALUES
    
 
 INSERT INTO
-  replies (question_id, reply_id, user_id, body)
+  replies (question_id, parent_reply_id, user_id, body)
 VALUES
   ((SELECT id FROM questions WHERE title = "Name"),
-    null,
+    NULL,
     (SELECT id FROM users WHERE fname = "Daniel" AND lname = "Moon"),
     "My name is Daniel"),
     
@@ -79,23 +81,13 @@ VALUES
     (SELECT id FROM users WHERE fname = "Jon" AND lname = "Dominguez"),
     "Thanks for the reply!"
   );
-    
-    
-   
-   
-   
-   
-   CREATE TABLE replies (
-     id INTEGER PRIMARY KEY,
-     question_id INTEGER NOT NULL,
-     reply_id INTEGER,
-     user_id INTEGER NOT NULL,
-     body TEXT,
-     
-     FOREIGN KEY (question_id) REFERENCES questions(id),
-     FOREIGN KEY (reply_id) REFERENCES replies(id),
-     FOREIGN KEY (user_id) REFERENCES users(id)
-   );
   
   
+  INSERT INTO
+    question_likes(user_id, question_id)
+  VALUES
+    ((SELECT id FROM users WHERE fname = "Jessie" AND lname = "Wong"),
+     (SELECT id FROM questions WHERE title = "Name")),
     
+    ((SELECT id FROM users WHERE fname = "Jon" AND lname "Dominguez"),
+     (SELECT id FROM questions WHERE title = "SQL Method"));
