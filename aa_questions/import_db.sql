@@ -1,4 +1,8 @@
 DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS questions;
+DROP TABLE IF EXISTS question_follows;
+DROP TABLE IF EXISTS replies;
+DROP TABLE IF EXISTS question_likes;
 
 PRAGMA foreign_keys = ON;
 
@@ -70,14 +74,15 @@ VALUES
 INSERT INTO
   replies (question_id, parent_reply_id, user_id, body)
 VALUES
-  ((SELECT id FROM questions WHERE title = "Name"),
+  (
+    (SELECT id FROM questions WHERE title = "Name"),
     NULL,
     (SELECT id FROM users WHERE fname = "Daniel" AND lname = "Moon"),
     "My name is Daniel"),
     
-    (
+  (
     (SELECT id FROM questions WHERE title = "Name"),
-    (SELECT id FROM replies WHERE body = "My name is Daniel" AND user_id = (SELECT id FROM users WHERE fname = "Daniel" AND lname = "Moon"),
+    (SELECT id FROM replies WHERE body = "My name is Daniel" AND user_id = (SELECT id FROM users WHERE fname = "Daniel" AND lname = "Moon")),
     (SELECT id FROM users WHERE fname = "Jon" AND lname = "Dominguez"),
     "Thanks for the reply!"
   );
@@ -89,5 +94,5 @@ VALUES
     ((SELECT id FROM users WHERE fname = "Jessie" AND lname = "Wong"),
      (SELECT id FROM questions WHERE title = "Name")),
     
-    ((SELECT id FROM users WHERE fname = "Jon" AND lname "Dominguez"),
+    ((SELECT id FROM users WHERE fname = "Jon" AND lname = "Dominguez"),
      (SELECT id FROM questions WHERE title = "SQL Method"));
