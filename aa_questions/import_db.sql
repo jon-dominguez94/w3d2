@@ -1,3 +1,5 @@
+PRAGMA foreign_keys = ON;
+
 CREATE TABLE users (
   id INTEGER PRIMARY KEY,
   fname TEXT NOT NULL, 
@@ -43,3 +45,15 @@ CREATE TABLE question_likes (
   FOREIGN KEY (question_id) REFERENCES questions(id)  
 );
 
+INSERT INTO
+  users(fname, lname)
+  VALUES
+  ("Jon", "Dominguez"), ("Daniel", "Moon"), ("Jessie", "Wong");
+
+INSERT INTO 
+  questions (title, body, user_id)
+  VALUES
+  ("SQL Method", "sgsefesrtgesrgr", (SELECT id FROM users WHERE fname = "Daniel" AND lname = "Moon")),
+  ("Name", "What's your name?", (SELECT id FROM users WHERE fname = "Jon" AND lname = "Dominguez"));
+  
+  
