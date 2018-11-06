@@ -78,11 +78,19 @@ VALUES
     (SELECT id FROM questions WHERE title = "Name"),
     NULL,
     (SELECT id FROM users WHERE fname = "Daniel" AND lname = "Moon"),
-    "My name is Daniel"),
-    
+    "My name is Daniel");
+  
+
+INSERT INTO
+  replies (question_id, parent_reply_id, user_id, body)
+VALUES
   (
     (SELECT id FROM questions WHERE title = "Name"),
-    (SELECT id FROM replies WHERE body = "My name is Daniel" AND user_id = (SELECT id FROM users WHERE fname = "Daniel" AND lname = "Moon")),
+    (SELECT id 
+      FROM replies 
+      WHERE body = "My name is Daniel" AND user_id = (
+        SELECT id FROM users WHERE fname = "Daniel" AND lname = "Moon"
+      )),
     (SELECT id FROM users WHERE fname = "Jon" AND lname = "Dominguez"),
     "Thanks for the reply!"
   );
