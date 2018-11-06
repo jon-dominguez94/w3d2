@@ -35,7 +35,7 @@ CREATE TABLE replies (
   question_id INTEGER NOT NULL,
   parent_reply_id INTEGER,
   user_id INTEGER NOT NULL,
-  body TEXT,
+  body TEXT,23
   
   FOREIGN KEY (question_id) REFERENCES questions(id),
   FOREIGN KEY (parent_reply_id) REFERENCES replies(id),
