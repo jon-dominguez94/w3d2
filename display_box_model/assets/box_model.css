@@ -76,4 +76,7 @@ nav li {
   display: inline-block;
 }
 
+nav li a {
+  padding: 20px;
+}
 
