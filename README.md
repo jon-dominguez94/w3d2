@@ -5,5 +5,5 @@
 
 Completed By:
 
-- Student 1
-- Student 2
+- Jon Dominguez
+- Daniel Moon
