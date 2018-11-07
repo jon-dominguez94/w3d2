@@ -30,13 +30,21 @@ class Question
     SQL
     
     return nil if questions.length == 0
-    # q_list = []
-    # questions.each do |q|
-    #   q_list << Question.new(q)
-    # end
-    # q_list
-    # 
     questions.map {|q| Question.new(q)}
+  end
+  
+  def author
+    # user = QuestionsDatabase.instance.execute(<<-SQL, @user_id)
+    #   SELECT * FROM users WHERE id = ?
+    # SQL
+    # 
+    # return nil if user.length == 0
+    # User.new(user.first) 
+    User.find_by_id(@user_id)
+  end
+  
+  def replies
+    Reply.find_by_user_id(@id)
   end
   
 end

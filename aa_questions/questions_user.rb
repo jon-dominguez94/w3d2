@@ -49,21 +49,24 @@ class User
   
   
   def authored_questions
-    questions = QuestionsDatabase.instance.execute(<<-SQL, @id)
-      SELECT * FROM questions WHERE user_id = ?
-    SQL
-    
-    return nil if questions.empty?
-    questions.map {|q| Question.new(q)}    
+    # questions = QuestionsDatabase.instance.execute(<<-SQL, @id)
+    #   SELECT * FROM questions WHERE user_id = ?
+    # SQL
+    # 
+    # return nil if questions.empty?
+    # questions.map {|q| Question.new(q)}  
+    Question.find_by_author_id(@id)  
   end
   
   def authored_replies
-    replies = QuestionsDatabase.instance.execute(<<-SQL, @id)
-      SELECT * FROM replies WHERE user_id = ?
-    SQL
+    # replies = QuestionsDatabase.instance.execute(<<-SQL, @id)
+    #   SELECT * FROM replies WHERE user_id = ?
+    # SQL
+    # 
+    # return nil if replies.empty?
+    # replies.map {|r| QuestionReply.new(r)}
     
-    return nil if replies.empty?
-    replies.map {|r| QuestionReply.new(r)}
+    Reply.find_by_user_id(self.id)
   end
 end
 
