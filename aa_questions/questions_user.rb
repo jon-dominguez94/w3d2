@@ -38,8 +38,33 @@ class User
     User.new(user.first)
   end
   
+  def self.find_by_name(fname, lname)
+    user =  QuestionsDatabase.instance.execute(<<-SQL, fname, lname) 
+      SELECT * FROM users WHERE fname = ? AND lname = ?
+    SQL
+    
+    return nil unless user.length > 0
+    User.new(user.first)  
+  end
   
   
+  def authored_questions
+    questions = QuestionsDatabase.instance.execute(<<-SQL, @id)
+      SELECT * FROM questions WHERE user_id = ?
+    SQL
+    
+    return nil if questions.empty?
+    questions.map {|q| Question.new(q)}    
+  end
+  
+  def authored_replies
+    replies = QuestionsDatabase.instance.execute(<<-SQL, @id)
+      SELECT * FROM replies WHERE user_id = ?
+    SQL
+    
+    return nil if replies.empty?
+    replies.map {|r| QuestionReply.new(r)}
+  end
 end
 
 
