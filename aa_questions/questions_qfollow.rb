@@ -19,7 +19,7 @@ class QuestionFollow
   end
   
   
-  def self.followers_for_question_id(@question_id)
+  def self.followers_for_question_id(question_id)
     #return an array of user objects
     
     # what_is_user_id = QuestionsDatabase.instance.execute(<<-SQL, question_id)
@@ -33,9 +33,9 @@ class QuestionFollow
     # return nil if users_arr.empty?
     # users_arr.map {|u| User.new(u)}
     
-    users = QuestionsDatabase.instance.execute(<<-SQL, @question_id)
+    users = QuestionsDatabase.instance.execute(<<-SQL, question_id)
       SELECT 
-        u.id, u.fname, u.lname 
+        u.*
       FROM 
         users AS u 
       JOIN
@@ -48,6 +48,24 @@ class QuestionFollow
     
     return nil if users.empty?
     users.map {|u| User.new(u)}  
+  end
+  
+  def self.followed_questions_for_user_id(user_id)
+    questions = QuestionsDatabase.instance.execute(<<-SQL, user_id)
+      SELECT 
+        q.*
+      FROM
+        questions AS q
+      JOIN
+        question_follows AS qf
+      WHERE
+        qf.user_id = ?
+        AND
+          q.id = qf.question_id
+    SQL
+    
+    return nil if questions.empty?
+    questions.map {|q| Question.new(q)}
   end
   
 end
